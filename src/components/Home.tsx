@@ -81,66 +81,69 @@ const Home = () => {
   } // show this if products fail to load
 
   return (
-    <main>
-      <h1>Product Catalog</h1>
+    <div>
+      <div className="page-header">
+        <h1>Product Catalog</h1>
 
-      <label htmlFor="category">Filter by category: </label>
+        <div className="filter-box">
+          <label htmlFor="category">Filter by category:</label>
 
-      <select
-        id="category"
-        value={selectedCategory}
-        onChange={(e) => setSelectedCategory(e.target.value)}
-        disabled={categoriesLoading || categoriesError}
-      >
-        {/* Default option: see all products */}
-        <option value="all"> All Products</option>
-        {categories?.map((category) => (
-          <option key={category} value={category}>
-            {category}
-          </option>
-        ))}
-      </select>
+          <select
+            id="category"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            disabled={categoriesLoading || categoriesError}
+          >
+            <option value="all">All Products</option>
 
-      <div className="product-section">
+            {categories?.map((category) => (
+              <option key={category} value={category}>
+                {category
+                  .split(" ")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="product-grid">
         {products?.map((product) => (
-          <article key={product.id}>
+          <article className="product-card" key={product.id}>
             <img
+              className="product-image"
               src={product.image}
               alt={product.title}
-              width="150"
               onError={(e) => {
                 e.currentTarget.src = PLACEHOLDER_IMAGE;
               }}
             />
 
-            <h2>{product.title}</h2>
+            <div className="product-info">
+              <h2>{product.title}</h2>
 
-            <p>
-              <strong>Price:</strong> ${product.price.toFixed(2)}
-            </p>
+              <p className="product-price">${product.price.toFixed(2)}</p>
 
-            <p>
-              <strong>Category:</strong> {product.category}
-            </p>
+              <p className="product-category">{product.category}</p>
 
-            <p>
-              <strong>Description:</strong> {product.description}
-            </p>
+              <p className="product-description">{product.description}</p>
 
-            <p>
-              <strong>Rating:</strong> {product.rating.rate} / 5
-            </p>
+              <p className="product-rating">
+                Rating: {product.rating.rate} / 5
+              </p>
 
-            <button
-              className="add-cart"
-              onClick={() => dispatch(addToCart(product))}
-            >
-              Add to Cart
-            </button>
+              <button
+                className="primary-button"
+                onClick={() => dispatch(addToCart(product))}
+              >
+                Add to Cart
+              </button>
+            </div>
           </article>
         ))}
       </div>
-    </main>
+    </div>
   );
 };
 
