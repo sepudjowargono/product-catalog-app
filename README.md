@@ -22,7 +22,7 @@ The shopping cart is managed using Redux Toolkit and is saved in `sessionStorage
   - 🖼️ Image
 - Includes an **Add to Cart** button for each product
 
----
+#
 
 ### 🔎 Dynamic Category Filter
 
@@ -31,7 +31,7 @@ The shopping cart is managed using Redux Toolkit and is saved in `sessionStorage
 - Users can filter products by category
 - Selecting a category updates the displayed products
 
----
+#
 
 ### 🧺 Shopping Cart
 
@@ -44,7 +44,7 @@ The shopping cart is managed using Redux Toolkit and is saved in `sessionStorage
   - 💲 Price
 - Users can remove products from the cart
 
----
+#
 
 ### 📊 Cart Totals
 
@@ -53,7 +53,7 @@ The cart automatically calculates and displays:
 - 🛍️ Total number of products
 - 💰 Total cart price
 
----
+#
 
 ### ✅ Checkout
 
@@ -61,13 +61,13 @@ The cart automatically calculates and displays:
 - Checkout also clears the cart from `sessionStorage`
 - A success message appears after checkout
 
----
+#
 
 ### 🖼️ Image Fallback
 
 Some FakeStore API images may fail to load. This app includes image fallback handling so a placeholder image appears if the original product image is unavailable.
 
----
+#
 
 ### 🎨 Styling
 
@@ -100,6 +100,8 @@ This project uses the FakeStore API:
 https://fakestoreapi.com
 ```
 
+---
+
 ## 📡 Endpoints Used
 
 ### Fetch all products
@@ -122,7 +124,7 @@ GET https://fakestoreapi.com/products/category/{category}
 
 ---
 
-# 📁 Project Structure
+## 📁 Project Structure
 
 ```txt
 src/
@@ -160,7 +162,7 @@ Wraps the application with:
 
 This allows the entire app to access Redux state and React Query functionality.
 
----
+#
 
 ### 🧠 `store.ts`
 
@@ -175,7 +177,7 @@ AppDispatch
 
 These are used for TypeScript support with `useSelector` and `useDispatch`.
 
----
+#
 
 ### 🛍️ `cartSlice.ts`
 
@@ -189,7 +191,7 @@ Includes reducers for:
 
 It also includes `sessionStorage` logic to save, load, and clear cart data.
 
----
+#
 
 ### 🏠 `Home.tsx`
 
@@ -203,7 +205,7 @@ Displays the main product catalog.
 - Display product information
 - Add products to the cart
 
----
+#
 
 ### 🛒 `ShoppingCart.tsx`
 
@@ -218,7 +220,7 @@ Displays the shopping cart.
 - Calculate total price
 - Handle checkout
 
----
+#
 
 ### 🧭 `Navbar.tsx`
 
@@ -230,7 +232,7 @@ Displays the navigation bar.
 - Provide navigation links
 - Display current cart item count
 
----
+#
 
 ### 🎨 `App.css`
 
@@ -252,10 +254,10 @@ Contains the styling for the full application.
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/sepudjowargono/product-catalog-app.git
 ```
 
----
+#
 
 ### 2️⃣ Navigate Into the Project Folder
 
@@ -263,7 +265,7 @@ git clone YOUR_REPOSITORY_URL
 cd ecommerce-web-app
 ```
 
----
+#
 
 ### 3️⃣ Install Dependencies
 
@@ -271,7 +273,7 @@ cd ecommerce-web-app
 npm install
 ```
 
----
+#
 
 ### 4️⃣ Start the Development Server
 
@@ -279,7 +281,7 @@ npm install
 npm run dev
 ```
 
----
+#
 
 ### 5️⃣ Open the App in the Browser
 
@@ -309,7 +311,7 @@ npm install @reduxjs/toolkit react-redux @tanstack/react-query
 
 When the app loads, all products are displayed on the home page.
 
----
+#
 
 ### 🔎 Filter by Category
 
@@ -317,7 +319,7 @@ Use the dropdown menu to select a category.
 
 The product list will update based on the selected category.
 
----
+#
 
 ### ➕ Add to Cart
 
@@ -327,13 +329,13 @@ The item will be added to the shopping cart.
 
 If the item already exists in the cart, the quantity will increase.
 
----
+#
 
 ### ➖ Remove from Cart
 
 Click the **Remove** button beside a cart item to remove it from the cart.
 
----
+#
 
 ### ✅ Checkout
 
@@ -348,7 +350,73 @@ A success message will display after checkout.
 
 ---
 
-# 🔮 Future Improvements
+## 🧠 State Management
+
+### ⚡ React Query
+
+React Query is used for API/server data, including:
+
+- Products
+- Categories
+- Category-filtered products
+
+React Query handles:
+
+- Fetching
+- Loading states
+- Error states
+- Caching
+
+#
+
+### 🧰 Redux Toolkit
+
+Redux Toolkit is used for shopping cart state.
+
+The cart state includes:
+
+- Product information
+- Quantity of each item
+- Add/remove/clear cart actions
+
+#
+
+### 💾 sessionStorage
+
+The cart is saved in `sessionStorage`.
+
+This allows the cart to remain available during the browser session, even if the page is refreshed.
+
+---
+
+## ⚠️ Error Handling
+
+The app includes error handling for:
+
+- Failed product API requests
+- Failed category API requests
+- Broken product images
+- `sessionStorage` loading and saving issues
+
+---
+
+## 🖼️ Image Fallback Handling
+
+If a product image fails to load, the app replaces it with a placeholder image.
+
+Example:
+
+```tsx
+onError={(e) => {
+  e.currentTarget.src = PLACEHOLDER_IMAGE;
+}}
+```
+
+This prevents broken images from appearing in the UI.
+
+---
+
+## 🔮 Future Improvements
 
 Possible future updates could include:
 
@@ -363,6 +431,6 @@ Possible future updates could include:
 
 ---
 
-# 👨‍💻 Author
+## 👨‍💻 Author
 
 Stephana Pudjowargono
