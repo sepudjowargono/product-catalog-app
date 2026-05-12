@@ -35,7 +35,8 @@ The shopping cart is managed using Redux Toolkit and is saved in `sessionStorage
 
 ### 🧺 Shopping Cart
 
-- Users can add products to the shopping cart
+- Users can decrease product quantity from the cart, or remove products from the cart
+- If a product quantity reaches zero, the item is automatically removed from the cart
 - If the same product is added more than once, the quantity increases
 - Cart displays:
   - 🏷️ Product title
@@ -333,7 +334,9 @@ If the item already exists in the cart, the quantity will increase.
 
 ### ➖ Remove from Cart
 
-Click the **Remove** button beside a cart item to remove it from the cart.
+Click the **Remove** button beside a cart item to decrease its quantity.
+
+If the quantity reaches zero, the item is automatically removed from the cart. 
 
 #
 
