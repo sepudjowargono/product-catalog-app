@@ -1,10 +1,12 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { auth } from "./firebaseConfig";
-import Register from "./components/Register";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 import Navbar from "./components/Navbar";
-import Home from "./components/Home";
+import Home from "./pages/Home";
 import ShoppingCart from "./components/ShoppingCart";
 import "./App.css";
 
@@ -18,24 +20,29 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  if (!user) {
-    return <Register />; // Show registration component if user is not authenticated
-  }
-
   return (
-    <>
-      <Navbar />
+    <BrowserRouter>
+      {!user ? (
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Routes>
+      ) : (
+        <>
+          <Navbar />
 
-      <main className="app-container">
-        <div id="products" className="products-section">
-          <Home />
-        </div>
+          <main className="app-container">
+            <div id="products" className="products-section">
+              <Home />
+            </div>
 
-        <div id="cart" className="cart-section">
-          <ShoppingCart />
-        </div>
-      </main>
-    </>
+            <div id="cart" className="cart-section">
+              <ShoppingCart />
+            </div>
+          </main>
+        </>
+      )}
+    </BrowserRouter>
   );
 }
 

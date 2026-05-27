@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
+import Logout from "../pages/Logout";
 
 const Navbar = () => {
   const cart = useSelector((state: RootState) => state.cart);
@@ -13,6 +14,7 @@ const Navbar = () => {
       <div className="navbar-links">
         <a href="#products">Products</a>
         <a href="#cart">Cart ({totalItems})</a>
+        <Logout />
       </div>
     </nav>
   );
