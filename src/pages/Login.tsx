@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,9 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null); // State for error messages
   const navigate = useNavigate(); // Hook for navigation
 
-  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       setEmail(""); // Clear email and password fields after successful login
@@ -21,11 +22,6 @@ const Login = () => {
         "Failed to log in. Please check your credentials and try again.",
       ); // Set error message if login fails
     }
-  };
-
-  const handleRegisterRedirect = () => {
-    // Redirect to registration page when user clicks "Register Now"
-    navigate("/register");
   };
 
   return (
@@ -59,9 +55,9 @@ const Login = () => {
         <button
           type="button"
           className="register-redirect-button"
-          onClick={handleRegisterRedirect}
+          onClick={() => navigate("/register")}
         >
-          Register Now
+          Register Here
         </button>
       </p>
     </div>

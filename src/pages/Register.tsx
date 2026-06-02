@@ -1,6 +1,7 @@
 import { useState, type SubmitEvent } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebaseConfig";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { auth, db } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
 
 const Register = () => {
@@ -10,19 +11,34 @@ const Register = () => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleLoginRedirect = () => {
-    navigate("/"); // Redirect to login page
-  };
-
   const handleRegister = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await createUserWithEmailAndPassword(auth, email, password); // Create user with email and password
-      setEmail(""); // Clear email and password fields after successful registration
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+
+      const newUser = userCredential.user; // get the newly created user
+
+      // save user data to Firestore
+      await setDoc(doc(db, "users", newUser.uid), {
+        uid: newUser.uid,
+        username,
+        email: newUser.email,
+        createdAt: serverTimestamp(),
+      });
+
+      setUsername("");
+      setEmail("");
       setPassword("");
       setError(null);
-    } catch {
-      setError("Failed to register. Please try again."); // Set error message if registration fails
+
+      navigate("/"); // redirect to login page after successful registration
+    } catch (error) {
+      console.error(error);
+      setError("Failed to register. Please try again.");
     }
   };
 
@@ -63,7 +79,7 @@ const Register = () => {
         <button
           type="button"
           className="login-redirect-button"
-          onClick={handleLoginRedirect}
+          onClick={() => navigate("/")}
         >
           Log In
         </button>

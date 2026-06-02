@@ -1,24 +1,13 @@
 // create shopping cart logic
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-export interface ProductState {
-  id: number;
-  title: string;
-  price: number;
-  category: string;
-  description: string;
-  image: string;
-  rating: {
-    rate: number;
-    count: number;
-  };
-}
+import type { ProductState } from "../types/Product"; // import the PRoductState interface from the types folder to ensure consistent typing across the application
 
 export interface CartItem extends ProductState {
   quantity: number;
 }
 
+// helper function to load cart data from session storage, with error handling to ensure the application can gracefully handle any issues with accessing session storage
 const loadCartFromSessionStorage = (): CartItem[] => {
   try {
     const savedCart = sessionStorage.getItem("cart");
@@ -31,11 +20,12 @@ const loadCartFromSessionStorage = (): CartItem[] => {
   }
 };
 
+// helper function to save cart data to session storage, with error handling to ensure the application can gracefully handle any issues with accessing session storage
 const saveCartToSessionStorage = (cart: CartItem[]) => {
   try {
     sessionStorage.setItem("cart", JSON.stringify(cart));
   } catch (error) {
-    console.error("Error: Failed to save card", error);
+    console.error("Error: Failed to save cart. Please try again.", error);
   }
 };
 
@@ -60,7 +50,7 @@ const cartSlice = createSlice({
       saveCartToSessionStorage(state);
     },
 
-    removeFromCart: (state, action: PayloadAction<number>) => {
+    removeFromCart: (state, action: PayloadAction<string>) => {
       const existingItem = state.find((item) => item.id === action.payload);
 
       if (existingItem) {

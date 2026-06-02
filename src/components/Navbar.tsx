@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import type { RootState } from "../redux/store";
-import Logout from "../pages/Logout";
+import Logout from "./Logout";
 
 const Navbar = () => {
   const cart = useSelector((state: RootState) => state.cart);
