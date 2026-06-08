@@ -1,14 +1,15 @@
 import { useState, type SubmitEvent } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-import { auth, db } from "../firebaseConfig";
+import { auth } from "../firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import { createUserProfile } from "../services/userService";
 
 const Register = () => {
   const [username, setUsername] = useState<string>(""); // State for username input
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
+
   const navigate = useNavigate();
 
   const handleRegister = async (e: SubmitEvent<HTMLFormElement>) => {
@@ -20,14 +21,11 @@ const Register = () => {
         password,
       );
 
-      const newUser = userCredential.user; // get the newly created user
-
-      // save user data to Firestore
-      await setDoc(doc(db, "users", newUser.uid), {
-        uid: newUser.uid,
+      // create user profile in Firestore after successful registration
+      await createUserProfile({
+        uid: userCredential.user.uid,
         username,
-        email: newUser.email,
-        createdAt: serverTimestamp(),
+        email: userCredential.user.email ?? email,
       });
 
       setUsername("");
@@ -81,7 +79,7 @@ const Register = () => {
           className="login-redirect-button"
           onClick={() => navigate("/")}
         >
-          Log In
+          Login
         </button>
       </p>
     </div>

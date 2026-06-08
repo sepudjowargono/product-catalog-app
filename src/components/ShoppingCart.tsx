@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../redux/store";
 import { clearCart, removeFromCart } from "../cart/cartSlice";
+import { auth } from "../firebaseConfig";
+import { createOrder } from "../services/orderService";
 
 const PLACEHOLDER_IMAGE = "https://via.placeholder.com/200x200?text=No+Image";
 
@@ -19,9 +21,24 @@ const ShoppingCart = () => {
     return total + item.price * item.quantity;
   }, 0); // calculate full price of cart
 
-  const handleCheckout = () => {
-    dispatch(clearCart()); // clears the cart in Redux and sessionStorage
-    setCheckoutMessage("Checkout successful! Your cart has been cleared!");
+  const handleCheckout = async () => {
+    const currentUser = auth.currentUser;
+
+    if (!currentUser) {
+      return;
+    }
+
+    try {
+      await createOrder(currentUser.uid, cart, totalPrice);
+
+      dispatch(clearCart());
+      setCheckoutMessage(
+        "Thank you for your purchase! Your order has been placed successfully.",
+      );
+    } catch (error) {
+      console.error("Failed to place your order. Please try again.", error);
+      setCheckoutMessage("Checkout failed. Please try again.");
+    }
   };
 
   return (
@@ -54,7 +71,7 @@ const ShoppingCart = () => {
 
                   <button
                     className="remove-button"
-                    onClick={() => dispatch(removeFromCart(item.id))}
+                    onClick={() => item.id && dispatch(removeFromCart(item.id))}
                   >
                     Remove
                   </button>

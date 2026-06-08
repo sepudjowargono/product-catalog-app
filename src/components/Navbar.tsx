@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import type { RootState } from "../redux/store";
 import Logout from "./Logout";
 
@@ -12,10 +13,13 @@ const Navbar = () => {
       <div className="navbar-logo">FakeStore</div>
 
       <div className="navbar-links">
-        <a href="#products">Products</a>
-        <a href="#cart">Cart ({totalItems})</a>
-        <Logout />
+        <Link to="/">Home</Link>
+        <Link to="/profile">Profile</Link>
+        <Link to="/orders">Order History</Link>
+        <Link to="/products/manage">Manage Products</Link>
+        <Link to="/cart">Cart ({totalItems})</Link>
       </div>
+      <Logout />
     </nav>
   );
 };
