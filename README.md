@@ -321,7 +321,7 @@ Displays the navigation bar.
 
 #
 
-### 🔐 Login.tsx
+### 🔐 `Login.tsx`
 
 Handles user authentication using Firebase Authentication.
 
@@ -333,7 +333,7 @@ Handles user authentication using Firebase Authentication.
 
 #
 
-### 📝 Register.tsx
+### 📝 `Register.tsx`
 
 Allows new users to create accounts.
 
@@ -345,7 +345,7 @@ Allows new users to create accounts.
 
 #
 
-### 👤 Profile.tsx
+### 👤 `Profile.tsx`
 
 Allows users to manage profile information.
 
@@ -357,7 +357,7 @@ Allows users to manage profile information.
 
 #
 
-### ⚙️ ProductManager.tsx
+### ⚙️ `ProductManager.tsx`
 
 Handles Firestore product CRUD operations.
 
@@ -370,7 +370,7 @@ Handles Firestore product CRUD operations.
 
 #
 
-### 📦 OrderHistory.tsx
+### 📦 `OrderHistory.tsx`
 
 Displays previous user orders.
 
@@ -384,7 +384,7 @@ Displays previous user orders.
 
 #
 
-### 🔥 firebaseConfig.ts
+### 🔥 `firebaseConfig.ts`
 
 Configures Firebase Authentication and Firestore connections.
 
