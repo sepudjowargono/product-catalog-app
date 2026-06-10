@@ -131,7 +131,7 @@ The cart automatically calculates and displays:
 
 ### 🖼️ Image Fallback
 
-Some FakeStore API images may fail to load. This app includes image fallback handling so a placeholder image appears if the original product image is unavailable.
+If a product image fails to load, the application displays a placeholder image to maintain a consistent user experience. This app includes image fallback handling so a placeholder image appears if the original product image is unavailable.
 
 #
 
@@ -287,7 +287,7 @@ Displays the main product catalog.
 #### Responsibilities:
 
 - Fetch all products
-- Fetch categories
+- Generate categories dynamically from Firestore product data
 - Filter products by selected category
 - Display product information
 - Add products to the cart
@@ -318,6 +318,75 @@ Displays the navigation bar.
 - Show app title/logo
 - Provide navigation links
 - Display current cart item count
+
+#
+
+### 🔐 Login.tsx
+
+Handles user authentication using Firebase Authentication.
+
+#### Responsibilities:
+
+- User login
+- Authentication validation
+- Redirect authenticated users
+
+#
+
+### 📝 Register.tsx
+
+Allows new users to create accounts.
+
+#### Responsibilities:
+
+- User registration
+- Firebase Authentication account creation
+- Firestore user profile creation
+
+#
+
+### 👤 Profile.tsx
+
+Allows users to manage profile information.
+
+#### Responsibilities:
+
+- View user profile
+- Update profile information
+- Delete account
+
+#
+
+### ⚙️ ProductManager.tsx
+
+Handles Firestore product CRUD operations.
+
+#### Responsibilities:
+
+- Create products
+- Read products
+- Update products
+- Delete products
+
+#
+
+### 📦 OrderHistory.tsx
+
+Displays previous user orders.
+
+#### Responsibilities:
+
+- Retrieve user orders from Firestore
+- Display order IDs
+- Display order dates
+- Display order totals
+- Display purchased products
+
+#
+
+### 🔥 firebaseConfig.ts
+
+Configures Firebase Authentication and Firestore connections.
 
 #
 
