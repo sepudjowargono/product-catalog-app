@@ -2,9 +2,13 @@
 
 ## 📖 Overview
 
-This project is a React-based product catalog and shopping cart application. The app uses the FakeStore API to display products, filter products by category, and allow users to add items to a shopping cart.
+This project is a React-based E-Commerce application built using Firebase Authentication, Cloud Firestore, Redux Toolkit, React Query, and TypeScript.
 
-The shopping cart is managed using Redux Toolkit and is saved in `sessionStorage` so the cart data stays available while the browser session is active.
+Users can create accounts, log in securely, browse products, manage a shopping cart, place orders, and view previous order history.
+
+Products, users, and orders are stored in Firestore, allowing full Create, Read, Update, and Delete (CRUD) functionality throughout the application.
+
+The shopping cart is managed using Redux Toolkit and persisted using `sessionStorage` to maintain cart data during the browser session.
 
 ---
 
@@ -12,7 +16,7 @@ The shopping cart is managed using Redux Toolkit and is saved in `sessionStorage
 
 ### 🛒 Product Catalog
 
-- Displays a list of products from the FakeStore API
+- Displays a list of products from Firestore
 - Shows each product's:
   - 🏷️ Title
   - 💲 Price
@@ -26,7 +30,8 @@ The shopping cart is managed using Redux Toolkit and is saved in `sessionStorage
 
 ### 🔎 Dynamic Category Filter
 
-- Uses React Query to fetch product categories from the API
+- Uses React Query to retrieve product data from Firestore
+- Categories are dynamically generated from the product collection
 - The dropdown is dynamically generated and is not hard coded
 - Users can filter products by category
 - Selecting a category updates the displayed products
@@ -46,6 +51,66 @@ The shopping cart is managed using Redux Toolkit and is saved in `sessionStorage
 - Users can remove products from the cart
 
 #
+
+### 🔐 User Authentication
+
+- Register new accounts using Firebase Authentication
+- Login using email and password
+- Logout functionality
+- Authentication state persists across refreshes
+- Protected application routes for authenticated users
+
+#
+
+### 👤 User Profile Management
+
+Users can:
+
+- View profile information
+- Update username and address
+- Store profile information in Firestore
+- Delete their account and associated Firestore profile
+
+#
+
+### ⚙️ Product Management
+
+Products are stored in Firestore instead of the FakeStore API.
+
+Users can:
+
+- ➕ Create products
+- 👀 View products
+- ✏️ Update products
+- 🗑️ Delete products
+
+All changes are immediately reflected in Firestore.
+
+#
+
+### 📦 Order Management
+
+During checkout:
+
+- Orders are stored in Firestore
+- Order information includes:
+  - User ID
+  - Products purchased
+  - Quantities
+  - Total order price
+  - Date created
+
+#
+
+### 📜 Order History
+
+Users can:
+
+- View previous orders
+- View order IDs
+- View order creation dates
+- View total order prices
+- Expand orders to view purchased products
 
 ### 📊 Cart Totals
 
@@ -84,44 +149,51 @@ Some FakeStore API images may fail to load. This app includes image fallback han
 
 - ⚛️ React
 - 📘 TypeScript
+- 🔥 Firebase Authentication
+- 🔥 Cloud Firestore
 - 🧰 Redux Toolkit
 - 🔄 React Redux
 - ⚡ TanStack React Query
-- 🛒 FakeStore API
+- 🧭 React Router DOM
 - 🎨 CSS
 - 💾 sessionStorage
 
 ---
 
-## 🌐 API Used
+## 🔥 Firebase Services Used
 
-This project uses the FakeStore API:
+### Firebase Authentication
 
-```txt
-https://fakestoreapi.com
-```
+Used for:
+
+- User Registration
+- User Login
+- User Logout
+- Authentication State Management
+
+### Cloud Firestore
+
+Used for storing:
+
+- Users
+- Products
+- Orders
 
 ---
 
-## 📡 Endpoints Used
+## 📡 Firestore Collections Used
 
-### Fetch all products
+### `users`
 
-```txt
-GET https://fakestoreapi.com/products
-```
+Stores registered user profile data, including username, email, and address.
 
-### Fetch all categories
+### `products`
 
-```txt
-GET https://fakestoreapi.com/products/categories
-```
+Stores product data used for the product catalog and product management CRUD operations.
 
-### Fetch products by category
+### `orders`
 
-```txt
-GET https://fakestoreapi.com/products/category/{category}
-```
+Stores completed checkout orders, including user ID, purchased products, quantities, total price, and date created.
 
 ---
 
@@ -133,20 +205,34 @@ src/
     cartSlice.ts
 
   components/
-    Home.tsx
+    Logout.tsx
     Navbar.tsx
     ShoppingCart.tsx
+
+  pages/
+    Home.tsx
+    Login.tsx
+    OrderHistory.tsx
+    ProductManager.tsx
+    Profile.tsx
+    Register.tsx
 
   redux/
     store.ts
 
-  components/
-    Home.tsx
-    Navbar.tsx
-    ShoppingCart.tsx
+  services/
+    orderService.ts
+    productService.ts
+    userService.ts
+
+  types/
+    Order.ts
+    Product.ts
+    UserProfile.ts
 
   App.css
   App.tsx
+  firebaseConfig.ts
   main.tsx
 ```
 
@@ -172,8 +258,8 @@ Configures the Redux store and connects the cart reducer.
 It also exports:
 
 ```ts
-RootState
-AppDispatch
+RootState;
+AppDispatch;
 ```
 
 These are used for TypeScript support with `useSelector` and `useDispatch`.
@@ -242,11 +328,16 @@ Contains the styling for the full application.
 #### Includes:
 
 - Navbar styling
-- Product grid layout
+- Login and Register page styling
+- Profile page styling
+- Product catalog layout
+- Product Manager page styling
 - Product cards
 - Shopping cart styling
+- Order History page styling
 - Responsive design
 - Button hover effects
+- Beige and brown colour theme
 
 ---
 
@@ -276,7 +367,40 @@ npm install
 
 #
 
-### 4️⃣ Start the Development Server
+### 4️⃣ Firebase Configuration
+
+Create a Firebase project and enable:
+
+- Authentication
+- Cloud Firestore
+
+Create the following Firestore collections:
+
+```bash
+users
+products
+orders
+```
+
+Add your Firebase credentials to:
+
+```bash
+firebaseConfig.ts
+```
+
+Example:
+
+```bash
+const firebaseConfig = {
+  apiKey: "...",
+  authDomain: "...",
+  projectId: "...",
+};
+```
+
+#
+
+### 5️⃣ Start the Development Server
 
 ```bash
 npm run dev
@@ -284,7 +408,7 @@ npm run dev
 
 #
 
-### 5️⃣ Open the App in the Browser
+### 6️⃣ Open the App in the Browser
 
 After running the development server, open the local host URL shown in your terminal.
 
@@ -301,7 +425,7 @@ http://localhost:5173
 If dependencies need to be installed manually, use:
 
 ```bash
-npm install @reduxjs/toolkit react-redux @tanstack/react-query
+npm install firebase react-router-dom @reduxjs/toolkit react-redux @tanstack/react-query
 ```
 
 ---
@@ -336,7 +460,7 @@ If the item already exists in the cart, the quantity will increase.
 
 Click the **Remove** button beside a cart item to decrease its quantity.
 
-If the quantity reaches zero, the item is automatically removed from the cart. 
+If the quantity reaches zero, the item is automatically removed from the cart.
 
 #
 
@@ -351,6 +475,46 @@ This clears:
 
 A success message will display after checkout.
 
+### 🔐 Register and Login
+
+Create a new account using the Register page.
+
+After successful registration, a user profile is automatically created in Firestore.
+
+#
+
+### 👤 Manage Profile
+
+Navigate to the Profile page to:
+
+- View profile information
+- Update username
+- Update address
+- Delete your account
+
+#
+
+### ⚙️ Manage Products
+
+Navigate to the Product Manager page to:
+
+- Create products
+- Edit products
+- Delete products
+
+All changes are stored in Firestore.
+
+#
+
+### 📦 View Order History
+
+Navigate to the Order History page to:
+
+- View previous orders
+- View order totals
+- View order dates
+- View purchased products
+
 ---
 
 ## 🧠 State Management
@@ -360,8 +524,8 @@ A success message will display after checkout.
 React Query is used for API/server data, including:
 
 - Products
-- Categories
-- Category-filtered products
+- Product Management
+- Firestore Data Refreshing
 
 React Query handles:
 
@@ -369,6 +533,7 @@ React Query handles:
 - Loading states
 - Error states
 - Caching
+- Refetching
 
 #
 
@@ -396,9 +561,11 @@ This allows the cart to remain available during the browser session, even if the
 
 The app includes error handling for:
 
-- Failed product API requests
-- Failed category API requests
-- Broken product images
+- Firebase Authentication errors
+- Firestore product operations
+- Firestore user operations
+- Firestore order operations
+- Failed image loading
 - `sessionStorage` loading and saving issues
 
 ---
@@ -423,14 +590,14 @@ This prevents broken images from appearing in the UI.
 
 Possible future updates could include:
 
-- 🔢 Add quantity increase/decrease buttons
-- 📄 Add a product details page
-- 🔍 Add search functionality
-- 🔐 Add login/authentication
-- 🧾 Add order confirmation page
-- 💾 Add localStorage option for longer cart persistence
-- 📱 Improve mobile layout further
-- ✨ Add animations or toast notifications
+- 👥 User Roles (Admin vs Customer)
+- 🔍 Product Search
+- ❤️ Wishlist Functionality
+- 🖼️ Product Details Pages
+- 📧 Email Order Confirmations
+- 📱 Additional Mobile Optimization
+- 🔔 Toast Notifications
+- 💳 Payment Gateway Integration
 
 ---
 
