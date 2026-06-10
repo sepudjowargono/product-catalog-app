@@ -7,6 +7,5 @@ export interface ProductState {
   image: string;
   rating: {
     rate: number;
-    count: number;
   };
 }

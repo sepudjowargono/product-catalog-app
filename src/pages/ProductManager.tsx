@@ -19,7 +19,6 @@ const emptyProduct: ProductState = {
   image: "",
   rating: {
     rate: 0,
-    count: 0,
   },
 };
 
@@ -159,21 +158,6 @@ const ProductManager = () => {
                 rating: {
                   ...formProduct.rating,
                   rate: Number(e.target.value),
-                },
-              })
-            }
-          />
-
-          <input
-            type="number"
-            placeholder="Rating Count"
-            value={formProduct.rating.count}
-            onChange={(e) =>
-              setFormProduct({
-                ...formProduct,
-                rating: {
-                  ...formProduct.rating,
-                  count: Number(e.target.value),
                 },
               })
             }
