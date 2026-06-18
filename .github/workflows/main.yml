@@ -21,11 +21,11 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
+          node-version: "24"
 
       # Step 3: Install dependencies
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       # Step 4: Run tests
       - name: Run Tests
