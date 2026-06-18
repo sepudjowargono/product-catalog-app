@@ -1,0 +1,36 @@
+name: Product Catalog App CI/CD
+
+on:
+  push:
+    branches:
+      - main # Triggers the workflow on pushes to the main branch
+  pull_request:
+    branches:
+      - main # Triggers on pull requests targeting the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      # Step 2: Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      # Step 3: Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Step 4: Run tests
+      - name: Run Tests
+        run: npm test
+
+      # Step 5: Build
+      - name: Build
+        run: npm run build
