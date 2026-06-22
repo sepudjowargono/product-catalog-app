@@ -160,6 +160,54 @@ If a product image fails to load, the application displays a placeholder image t
 
 ---
 
+## 🧪 Testing
+
+This project follows Test-Driven Development (TDD) practices using Jest and React Testing Library.
+
+### Unit Tests
+
+#### Login.test.tsx
+- Verifies login form rendering
+- Verifies user input handling
+- Verifies login button interaction
+
+#### Navbar.test.tsx
+- Verifies navbar rendering
+- Verifies navigation links display correctly
+- Verifies cart count is displayed
+
+### Integration Test
+
+#### CartIntegration.test.tsx
+- Simulates adding a product to the cart
+- Verifies Redux state updates correctly
+- Verifies cart UI updates after user interaction
+
+Run tests with:
+```bash
+npm test
+```
+---
+
+## 🚀 Continuous Integration (CI)
+
+A GitHub Actions workflow was implemented using:
+
+```bash
+.github/workflows/main.yml
+```
+
+The workflow automatically:
+
+- Installs project dependencies
+- Runs all unit and integration tests
+- Builds the application
+- Validates code before deployment
+
+This workflow runs on pushes and pull requests to the `main` branch.
+
+---
+
 ## 🔥 Firebase Services Used
 
 ### Firebase Authentication
@@ -236,6 +284,18 @@ src/
   main.tsx
 ```
 
+### 📂 Additional Project Structure
+
+```txt
+src/
+  .github/workflows
+    main.yml
+
+  __tests__
+    Navbar.test.tsx
+    Login.test.tsx
+    CartIntegration.test.tsx
+```
 ---
 
 ## 📄 File Descriptions
