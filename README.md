@@ -1,5 +1,15 @@
 # 🛍️ Ecommerce Web Product Catalog Shopping Cart App
 
+## 🌐 Live Demo
+
+🔗 Live Application:
+https://product-catalog-app-cyan.vercel.app
+
+📂 GitHub Repository:
+https://github.com/sepudjowargono/product-catalog-app
+
+---
+
 ## 📖 Overview
 
 This project is a React-based E-Commerce application built using Firebase Authentication, Cloud Firestore, Redux Toolkit, React Query, and TypeScript.
