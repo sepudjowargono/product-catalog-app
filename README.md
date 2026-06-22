@@ -162,7 +162,7 @@ If a product image fails to load, the application displays a placeholder image t
 
 ## 🧪 Testing
 
-This project follows Test-Driven Development (TDD) practices using Jest and React Testing Library.
+This project demonstrates Test-Driven Development (TDD) practices through the implementation of unit and integration tests using Jest and React Testing Library.
 
 ### Unit Tests
 
@@ -287,10 +287,11 @@ src/
 ### 📂 Additional Project Structure
 
 ```txt
-src/
-  .github/workflows
+.github
+  workflows
     main.yml
 
+src/
   __tests__
     Navbar.test.tsx
     Login.test.tsx
@@ -555,6 +556,12 @@ If dependencies need to be installed manually, use:
 
 ```bash
 npm install firebase react-router-dom @reduxjs/toolkit react-redux @tanstack/react-query
+```
+
+and 
+
+```bash
+npm install --save-dev jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom @testing-library/user-event
 ```
 
 ---
